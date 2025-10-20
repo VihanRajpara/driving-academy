@@ -1,5 +1,7 @@
 import React from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Box, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 const CustomerActionDialog = ({ open, onClose, customer, onEdit, onDelete }) => {
     if (!customer) return null;
@@ -12,7 +14,7 @@ const CustomerActionDialog = ({ open, onClose, customer, onEdit, onDelete }) => 
                 sx: {
                     borderRadius: 4,
                     minWidth: 350,
-                    p: 2,
+                    p: 1,
                     overflow: "hidden",
                     boxShadow: "0 8px 25px rgba(0,0,0,0.2)"
                 }
@@ -20,19 +22,41 @@ const CustomerActionDialog = ({ open, onClose, customer, onEdit, onDelete }) => 
         >
             <Box
                 sx={{
+                    position: "relative",
                     background: "linear-gradient(90deg, #1A5276, #145A86)",
                     py: 2,
                     px: 3,
                     borderRadius: "12px 12px 0 0",
                     color: "#fff",
-                    textAlign: "center",
+                    textAlign: "left",
                     fontWeight: 700,
                     fontSize: "18px",
-                    letterSpacing: 0.5
+                    letterSpacing: 0.5,
                 }}
             >
                 Manage Customer
+                <IconButton
+                    onClick={onClose}
+                    sx={{
+                        position: "absolute",
+                        right: 16,
+                        top: "50%",                 // center vertically
+                        transform: "translateY(-50%)", // perfect vertical alignment
+                        color: "#fff",
+                        backgroundColor: "rgba(255,255,255,0.2)",
+                        "&:hover": { backgroundColor: "rgba(255,255,255,0.3)" },
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
             </Box>
+
 
             <DialogContent sx={{ mt: 2 }}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5, fontWeight: 500 }}>

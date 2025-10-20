@@ -1,5 +1,6 @@
 import React from "react";
-import { Dialog, DialogContent, DialogActions, Button, Typography, Box } from "@mui/material";
+import { Dialog, DialogContent, DialogActions, Button, Typography, Box, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ConfirmDialog = ({ open, onClose, onConfirm, title = "Confirm Action", message = "Are you sure?" }) => {
     return (
@@ -18,18 +19,39 @@ const ConfirmDialog = ({ open, onClose, onConfirm, title = "Confirm Action", mes
         >
             <Box
                 sx={{
+                    position: "relative",
                     background: "linear-gradient(90deg, #1A5276, #145A86)",
-                    py: 1.5,
+                    py: 2,
                     px: 3,
                     borderRadius: "12px 12px 0 0",
                     color: "#fff",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    textAlign: "left",
+                    fontWeight: 700,
                     fontSize: "18px",
-                    letterSpacing: 0.6
+                    letterSpacing: 0.5,
                 }}
             >
                 {title}
+                <IconButton
+                    onClick={onClose}
+                    sx={{
+                        position: "absolute",
+                        right: 16,
+                        top: "50%",                 // center vertically
+                        transform: "translateY(-50%)", // perfect vertical alignment
+                        color: "#fff",
+                        backgroundColor: "rgba(255,255,255,0.2)",
+                        "&:hover": { backgroundColor: "rgba(255,255,255,0.3)" },
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
             </Box>
 
             <DialogContent sx={{ mt: 1 }}>
