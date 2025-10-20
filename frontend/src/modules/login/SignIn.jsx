@@ -13,6 +13,32 @@ import { useSnackbar } from '../../util/SnackbarProvider';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserProvider';
 
+const sx = {
+  borderRadius: "12px",
+  background: "#fff",
+  boxShadow: "0px 4px 15px rgba(26, 82, 118, 0.07)",
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "12px",
+    "& fieldset": {
+      borderColor: "#1a537664",
+      borderWidth: 1.5,
+    },
+    "&:hover fieldset": {
+      borderColor: "#145A86",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1A5276",
+      borderWidth: 2,
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "#1A5276",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#1A5276",
+  },
+}
+
 const SignIn = () => {
   const navigate = useNavigate();
   const { user, login, logout } = useUser();
@@ -43,7 +69,7 @@ const SignIn = () => {
       if (username.toLowerCase() === 'test.user' && password === 'user123') {
         showSnackbar('Login successful! 🎉', 'success');
         console.log('Login successful!');
-        const userData = { name : 'vihan',username: 'Test User', loginId: 'test.user' ,email:'vihan@gmail.com' ,number :'1234567890'  };
+        const userData = { name: 'vihan', username: 'Test User', loginId: 'test.user', email: 'vihan@gmail.com', number: '1234567890' };
         login(userData);
         // Redirect or set global state here
         navigate('/dashboard');
@@ -80,7 +106,7 @@ const SignIn = () => {
         gap={2}
       >
         <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography variant="h5" color="primary" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#1A5276' }}>
             Hello! Welcome Back
           </Typography>
           <Typography variant="body1" color="text.secondary">
@@ -94,15 +120,16 @@ const SignIn = () => {
             type="text"
             margin="dense"
             id="loginId_input"
-            placeholder="NAME.SURNAME"
+            placeholder="USER NAME"
             value={username}
             onKeyDown={handleKeyDown}
             onChange={(e) => setUsername(e.target.value)}
             required
             fullWidth
             InputProps={{
-              style: { height: 40 }
+              style: { height: 50 }
             }}
+            sx={sx}
           />
         </Box>
 
@@ -120,14 +147,15 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position="end" sx={{ mr: 1 }}>
                   <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
-              style: { height: 40 }
+              style: { height: 50 }
             }}
+            sx={sx}
           />
         </Box>
 
@@ -143,7 +171,19 @@ const SignIn = () => {
           <Button
             variant="contained"
             onClick={handleLogin}
-            sx={{ backgroundColor: '#1A5276', width: '100%', height: 40 }}
+            sx={{
+              width: '100%',
+              py: 1.1,
+              fontWeight: 600,
+              fontSize: "16px",
+              borderRadius: "12px",
+              background: "linear-gradient(90deg, #1A5276, #145A86)",
+              boxShadow: "0px 4px 15px rgba(26, 82, 118, 0.4)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #145A86, #0F466B)",
+                boxShadow: "0px 6px 20px rgba(26, 82, 118, 0.5)",
+              },
+            }}
           >
             {isLoading ? <CircularProgress color="inherit" size={25} /> : <>Login</>}
           </Button>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     AppBar,
     Toolbar,
@@ -12,6 +12,38 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useUser } from '../context/UserProvider';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ConfirmDialog from '../../util/ConfirmDialog';
+
+const LogoutButton = ({ logout }) => {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <>
+            <IconButton
+                color="inherit"
+                onClick={() => setOpen(true)}
+                sx={{
+                    transition: "0.3s",
+                    "&:active": { transform: "scale(0.9)" },
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+                }}
+            >
+                <LogoutIcon />
+            </IconButton>
+
+            <ConfirmDialog
+                open={open}
+                onClose={() => setOpen(false)}
+                onConfirm={() => {
+                    logout();
+                    setOpen(false);
+                }}
+                title="Confirm Logout ?"
+                message="Are you sure you want to log out?"
+            />
+        </>
+    );
+};
 
 const TopBar = () => {
     const { user, logout } = useUser();
@@ -92,17 +124,8 @@ const TopBar = () => {
                 </Stack>
 
                 {/* Logout Icon */}
-                <IconButton
-                    color="inherit"
-                    onClick={handleLogout}
-                    sx={{
-                        transition: "0.3s",
-                        "&:active": { transform: "scale(0.9)" },
-                        "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
-                    }}
-                >
-                    <LogoutIcon />
-                </IconButton>
+                <LogoutButton logout={logout} />
+            
             </Toolbar>
         </AppBar>
     )

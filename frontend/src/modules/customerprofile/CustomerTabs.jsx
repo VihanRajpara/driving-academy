@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
 import TopBar from '../dashboard/TopBar'
 import { Box, Divider, Paper, Tab, Tabs, Typography } from '@mui/material'
-import CustomerProfile from './Customerprofile';
+import CustomerProfile from './CustomerProfile';
 import CustomerList from './CustomerList';
-
 
 const CustomerTabs = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [editCustomer, setEditCustomer] = useState(null);
 
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
+        if (newValue === 0 && !editCustomer) {
+            setEditCustomer(null); // reset form if not editing
+        }
+    };
+
+    const handleEditCustomer = (customer) => {
+        setEditCustomer(customer); // send customer data to form
+        setActiveTab(0); // switch to Add/Edit tab
     };
 
     return (
@@ -34,7 +42,6 @@ const CustomerTabs = () => {
                     bgcolor: "#f8f9fa",
                 }}
             >
-                {/* Header Card */}
                 <Paper
                     elevation={0}
                     sx={{
@@ -61,7 +68,7 @@ const CustomerTabs = () => {
                         color="text.secondary"
                         sx={{ maxWidth: 500, mx: "auto" }}
                     >
-                        add new Customer profile information below.
+                        Add new Customer profile information below or edit an existing one.
                     </Typography>
                 </Paper>
 
@@ -86,20 +93,48 @@ const CustomerTabs = () => {
                         variant="fullWidth"
                         sx={{
                             mb: 3,
+                            borderRadius: 3,
+                            backgroundColor: "#f1f3f6",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
                             "& .MuiTabs-indicator": {
-                                height: "4px",
-                                borderRadius: "4px",
+                                height: "100%",
+                                borderRadius: 3,
                                 background: "linear-gradient(90deg, #1A5276, #145A86)",
+                                transition: "all 0.3s ease",
+                                zIndex: 1,
                             },
                         }}
                     >
-                        <Tab label="Add Customer" sx={{ fontWeight: 600, fontSize: "15px" }} />
-                        <Tab label="View Customers" sx={{ fontWeight: 600, fontSize: "15px" }} />
+                        {[`${editCustomer ? "Edit" : "Add"} Customer`, "View Customers"].map((label, idx) => (
+                            <Tab
+                                key={idx}
+                                label={idx === 0 && editCustomer ? "Edit Customer" : label}
+                                sx={{
+                                    fontWeight: 600,
+                                    fontSize: "15px",
+                                    textTransform: "none",
+                                    color: "#1A5276",
+                                    transition: "all 0.3s ease",
+                                    "&.Mui-selected": {
+                                        color: "#fff !important",
+                                        backgroundColor: "transparent", // rely on indicator
+                                        zIndex: 2,
+                                    },
+                                    "&:hover": {
+                                        color: "#145A86",
+                                        backgroundColor: (theme) =>
+                                            idx === activeTab ? "transparent" : "rgba(26,82,118,0.08)",
+                                    },
+                                }}
+                            />
+                        ))}
                     </Tabs>
 
+
+
                     <Box>
-                        {activeTab === 0 && <CustomerProfile />}
-                        {activeTab === 1 && <CustomerList />}
+                        {activeTab === 0 && <CustomerProfile editData={editCustomer} onSave={() => setEditCustomer(null)} />}
+                        {activeTab === 1 && <CustomerList onEditCustomer={handleEditCustomer} />}
                     </Box>
 
                 </Paper>
@@ -115,4 +150,4 @@ const CustomerTabs = () => {
     )
 }
 
-export default CustomerTabs
+export default CustomerTabs;
