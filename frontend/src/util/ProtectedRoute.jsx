@@ -9,10 +9,12 @@ const ProtectedRoute = () => {
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
+    console.log("user Data :::" , !user);
+    
     if (!user) {
       showSnackbar("Please log in to continue.", "warning");
     }
-  }, [user, showSnackbar]);
+  }, [user]);
 
   if (!user) {
     return <Navigate to="/" replace state={{ from: location }} />;

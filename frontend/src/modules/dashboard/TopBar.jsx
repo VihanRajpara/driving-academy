@@ -39,8 +39,8 @@ const TopBar = () => {
 
                 <Stack direction="row" alignItems="center" spacing={1.5}>
                     <Avatar
-                        alt={user?.name}
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${user?.name}&backgroundType=gradientLinear&backgroundColor=b79c70,8c7a5a&fontWeight=700`}
+                        alt={user?.username}
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${user?.username}&backgroundType=gradientLinear&backgroundColor=b79c70,8c7a5a&fontWeight=700`}
                         sx={{
                             width: 42,
                             height: 42,
@@ -57,7 +57,7 @@ const TopBar = () => {
                             fontSize: "1rem",
                         }}
                     >
-                        {user?.name}
+                        {user?.username}
                     </Typography>
                 </Stack>
                 {/* 🔹 Left: Logout Icon */}

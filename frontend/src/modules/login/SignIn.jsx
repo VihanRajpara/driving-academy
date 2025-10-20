@@ -43,7 +43,7 @@ const SignIn = () => {
       if (username.toLowerCase() === 'test.user' && password === 'user123') {
         showSnackbar('Login successful! 🎉', 'success');
         console.log('Login successful!');
-        const userData = { name : 'vihan',username: 'Test User', loginId: 'test.user' };
+        const userData = { name : 'vihan',username: 'Test User', loginId: 'test.user' ,email:'vihan@gmail.com' ,number :'1234567890'  };
         login(userData);
         // Redirect or set global state here
         navigate('/dashboard');
