@@ -5,13 +5,16 @@ import App from './App';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './theme';
 import { SnackbarProvider } from './util/SnackbarProvider';
+import { UserProvider } from "./modules/context/UserProvider";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <SnackbarProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </SnackbarProvider>
     </ThemeProvider>
   </BrowserRouter>
