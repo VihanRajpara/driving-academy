@@ -64,9 +64,11 @@ const TopBar = () => {
 
     return (
         <AppBar
-            position="static"
+            position="sticky"
             elevation={2}
             sx={{
+                top: 0,
+                zIndex: (theme) => theme.zIndex.appBar,
                 background: "linear-gradient(90deg, #1A5276, #154360)",
                 color: "#fff",
                 boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
@@ -125,7 +127,7 @@ const TopBar = () => {
 
                 {/* Logout Icon */}
                 <LogoutButton logout={logout} />
-            
+
             </Toolbar>
         </AppBar>
     )
