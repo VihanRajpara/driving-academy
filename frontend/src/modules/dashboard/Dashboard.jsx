@@ -17,9 +17,10 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import TopBar from "./TopBar";
+import { useUser } from "../context/UserProvider";
 
 const Dashboard = () => {
-    const userName = "Vihan";
+    const { user } = useUser();
     const navigate = useNavigate();
     const items = [
         { label: "My Profile", icon: <AccountCircle />, color: "#b79c70", path: "/myprofile" },
@@ -76,7 +77,7 @@ const Dashboard = () => {
                         gutterBottom
                         sx={{ color: "#1A5276", letterSpacing: 0.5 }}
                     >
-                        Hello, {userName}
+                        Hello, {user?.name}
                     </Typography>
                     <Typography
                         variant="body2"

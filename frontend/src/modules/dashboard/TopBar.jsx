@@ -8,11 +8,14 @@ import {
     Stack,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useUser } from '../context/UserProvider';
 
 const TopBar = () => {
-    const userName = "Vihan";
+    const { user, logout } = useUser();
     const handleLogout = () => {
-        console.log("User logged out");
+        if (window.confirm("Are you sure you want to log out?")) {
+            logout();
+        }
     };
     return (
         <AppBar
@@ -36,8 +39,8 @@ const TopBar = () => {
 
                 <Stack direction="row" alignItems="center" spacing={1.5}>
                     <Avatar
-                        alt={userName}
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${userName}&backgroundType=gradientLinear&backgroundColor=b79c70,8c7a5a&fontWeight=700`}
+                        alt={user?.name}
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${user?.name}&backgroundType=gradientLinear&backgroundColor=b79c70,8c7a5a&fontWeight=700`}
                         sx={{
                             width: 42,
                             height: 42,
@@ -54,7 +57,7 @@ const TopBar = () => {
                             fontSize: "1rem",
                         }}
                     >
-                        {userName}
+                        {user?.name}
                     </Typography>
                 </Stack>
                 {/* 🔹 Left: Logout Icon */}

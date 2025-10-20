@@ -11,9 +11,11 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSnackbar } from '../../util/SnackbarProvider';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserProvider';
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { user, login, logout } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -38,9 +40,11 @@ const SignIn = () => {
       // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      if (username.toLowerCase() === 'test.user' && password === 'password123') {
+      if (username.toLowerCase() === 'test.user' && password === 'user123') {
         showSnackbar('Login successful! 🎉', 'success');
         console.log('Login successful!');
+        const userData = { name : 'vihan',username: 'Test User', loginId: 'test.user' };
+        login(userData);
         // Redirect or set global state here
         navigate('/dashboard');
       } else {
@@ -71,7 +75,7 @@ const SignIn = () => {
           justifyContent: 'center',
           flexDirection: 'column',
           alignItems: 'center',
-          width: { xs: '85%', sm: '75%', md: '45%' , lg: '35%'}
+          width: { xs: '85%', sm: '75%', md: '45%', lg: '35%' }
         }}
         gap={2}
       >
