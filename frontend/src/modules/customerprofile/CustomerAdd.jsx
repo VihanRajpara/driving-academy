@@ -35,8 +35,7 @@ const sx = {
         color: "#1A5276",
     },
 }
-
-const CustomerProfile = ({ editData, onSave }) => {
+const CustomerAdd = ({ editData, onSave }) => {
     const { batches } = useUser();
     const [profile, setProfile] = useState({
         name: "",
@@ -276,6 +275,6 @@ const CustomerProfile = ({ editData, onSave }) => {
             }
         </Box>
     )
-};
+}
 
-export default CustomerProfile;
+export default CustomerAdd

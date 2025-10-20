@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import TopBar from '../dashboard/TopBar'
 import { Box, Divider, Paper, Tab, Tabs, Typography } from '@mui/material'
-import CustomerProfile from './CustomerProfile';
 import CustomerList from './CustomerList';
+import CustomerAdd from './CustomerAdd';
 
 const CustomerTabs = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -133,7 +133,7 @@ const CustomerTabs = () => {
 
 
                     <Box>
-                        {activeTab === 0 && <CustomerProfile editData={editCustomer} onSave={() => setEditCustomer(null)} />}
+                        {activeTab === 0 && <CustomerAdd editData={editCustomer} onSave={() => setEditCustomer(null)} />}
                         {activeTab === 1 && <CustomerList onEditCustomer={handleEditCustomer} />}
                     </Box>
 
