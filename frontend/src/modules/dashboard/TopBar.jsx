@@ -6,17 +6,30 @@ import {
     IconButton,
     Avatar,
     Stack,
+    Tooltip,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useUser } from '../context/UserProvider';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const TopBar = () => {
     const { user, logout } = useUser();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to log out?")) {
             logout();
         }
     };
+
+    const handleGoBack = () => {
+        navigate(-1); // go back one page in history
+    };
+
+    const canGoBack = location.key && location.pathname !== "/dashboard";
+
     return (
         <AppBar
             position="static"
@@ -36,8 +49,25 @@ const TopBar = () => {
                     px: 1,
                 }}
             >
-
                 <Stack direction="row" alignItems="center" spacing={1.5}>
+                    {/* Previous Page Button */}
+                    {canGoBack && (
+                        <Tooltip title="Go Back">
+                            <IconButton
+                                color="inherit"
+                                onClick={handleGoBack}
+                                sx={{
+                                    mr: 1,
+                                    transition: "0.3s",
+                                    "&:active": { transform: "scale(0.9)" },
+                                    "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+                                }}
+                            >
+                                <ArrowBackIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+
                     <Avatar
                         alt={user?.username}
                         src={`https://api.dicebear.com/7.x/initials/svg?seed=${user?.username}&backgroundType=gradientLinear&backgroundColor=b79c70,8c7a5a&fontWeight=700`}
@@ -60,7 +90,8 @@ const TopBar = () => {
                         {user?.username}
                     </Typography>
                 </Stack>
-                {/* 🔹 Left: Logout Icon */}
+
+                {/* Logout Icon */}
                 <IconButton
                     color="inherit"
                     onClick={handleLogout}
@@ -72,10 +103,9 @@ const TopBar = () => {
                 >
                     <LogoutIcon />
                 </IconButton>
-
             </Toolbar>
         </AppBar>
     )
 }
 
-export default TopBar
+export default TopBar;
