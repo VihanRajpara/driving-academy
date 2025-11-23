@@ -12,6 +12,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSnackbar } from '../../util/SnackbarProvider';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserProvider';
+import api from '../../api.js';
 
 const sx = {
   borderRadius: "12px",
@@ -63,19 +64,41 @@ const SignIn = () => {
     setIsLoading(true);
 
     try {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await api.post("/login/entry", {
+        username,
+        password,
+      });
+      console.log('response ::'  , res);
+      
 
-      if (username.toLowerCase() === 'test.user' && password === 'user123') {
-        showSnackbar('Login successful! 🎉', 'success');
-        console.log('Login successful!');
-        const userData = { name: 'vihan', username: 'Test User', loginId: 'test.user', email: 'vihan@gmail.com', number: '1234567890' };
-        login(userData);
-        // Redirect or set global state here
-        navigate('/dashboard');
-      } else {
+      if (res.status != 200) {
+        // 4xx / 5xx from backend
         showSnackbar('Invalid login ID or password.', 'error');
+        setIsLoading(false);
+        return;
       }
+
+      const data = await res.data;
+      // Expecting: { token: '...', user: { ... } }
+
+      if (!data.token) {
+        showSnackbar('Login failed: token not received.', 'error');
+        setIsLoading(false);
+        return;
+      }
+
+      // 🔐 Store token in localStorage
+      localStorage.setItem('authToken', data.token);
+
+      const userData = data.user || {
+        username,
+        name: username,
+      };
+
+      login(userData);
+
+      showSnackbar('Login successful! 🎉', 'success');
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login failed:', err);
       showSnackbar('Unexpected error during login.', 'error');

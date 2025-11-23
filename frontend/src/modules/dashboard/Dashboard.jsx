@@ -77,7 +77,7 @@ const Dashboard = () => {
                         gutterBottom
                         sx={{ color: "#1A5276", letterSpacing: 0.5 }}
                     >
-                        Hello, {user?.username}
+                        Hello, {user?.name}
                     </Typography>
                     <Typography
                         variant="body2"
